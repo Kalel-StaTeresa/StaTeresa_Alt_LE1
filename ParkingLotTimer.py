@@ -82,7 +82,7 @@ def remove_task(username):
     if task_number in To_Do:
         removed_task = To_Do.pop(task_number)
         print(f"Task removed successfully!")
-        user_menu(username)2
+        user_menu(username)
     else:
         print("Invalid task number. No task removed.")
         remove_task(username)
