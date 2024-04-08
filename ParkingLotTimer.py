@@ -1,11 +1,6 @@
-import os
-
-inventory = {
-    1:{}
-}
+To_Do = {}
 
 user_info={}
-
 
 def register():
     print("\nRegister a new account")
@@ -14,15 +9,15 @@ def register():
         print("This username already exists")
     else:
         password=str(input("Enter your password: "))
-        if len(password) < 6 :
-            print("Password must be atleast 6 characters.")
+        if len(password) < 8 :
+            print("Password must be atleast 8 characters.")
         else:
             user_info[username]={'password':password}
             print(f"Registration Complete.")
 
 def sign_in():
     print("Sign in an account")
-    username=str(input("Enter username: "))
+    username=str(input("Enter Username: "))
     password=str(input("Enter Password: "))
     if username in user_info and user_info[username]['password']== password:
         print("Sign in successful")
@@ -33,12 +28,11 @@ def sign_in():
     
 def user_menu(username):
             while True:
-                print("\nWelcome")
-                print("1. ")
-                print("2. ")
-                print("3. ")
-                print("4. ")
-                print("5. Log out")
+                print("\nWelcome to you To-Do List")
+                print("1. View Tasks")
+                print("2. Add Task")
+                print("3. Remove Task")
+                print("4. Log out")
 
                 choice=input("\nEnter your choice: ")
 
@@ -47,12 +41,10 @@ def user_menu(username):
                     if choice==1:
                         print()
                     elif choice==2:
-                        print()
+                        add_task(username)
                     elif choice==3:
-                        print()
+                        remove_task(username)
                     elif choice==4:
-                        print()
-                    elif choice==5:
                         print("\nLogging off...")
                         menu()
                     else:
@@ -60,69 +52,29 @@ def user_menu(username):
                 except ValueError:
                     print("\nInvalid Input. Please enter a number.")
 
-    
-def admin_log():
-    print("Sign in an account")
-    username=str(input("Enter username: "))
-    password=str(input("Enter Password: "))
-    if username=="admin" and password=="adminpass":
-        print("Admin Log in Successful")
-        admin_menu()
-    else:
-        print("Incorrect Admin Username/Password")
-        return
-    
-def admin_menu():
-        while True:
-            print("\nAdmin Settings")
-            print("1. ")
-            print("2. ")
-            print("3. ")
-            print("4. ")
-            print("5. Exit")
+def add_task(username):
+    print(To_Do)
+    print("\nAdd new task")
+    task=input("Task: ")
+def remove_task(username):
+    pass
 
-            choice=input("\nEnter your choice: ")
-
-            try:
-                choice=int(choice)
-                if choice==1:
-                    print()
-                elif choice==2:
-                    print()
-                elif choice==3:
-                    print()
-                elif choice==4:
-                    print()
-                elif choice==5:
-                    print("\nLogging off...")
-                    menu()
-                else:
-                    print("Invalid Input. Please select a number above")
-            except ValueError:
-                print("\nInvalid Input. Please enter a number.")
-    
 def menu():
     while True:
         print("\nMain Menu:")
-        print("1. ")
-        print("2. Sign In")
-        print("3. Sign up")
-        print("4. Admin Log in")
-        print("5. Exit")
+        print("1. Sign In")
+        print("2. Sign up")
+        print("3. Exit")
 
         choice=input("\nEnter your choice: ")
 
         try:
             choice=int(choice)
             if choice==1:
-                print()
-            elif choice==2:
                 sign_in()
-            elif choice==3:
+            elif choice==2:
                 register()
-            elif choice==4:
-                admin_log()
-            elif choice==5:
+            elif choice==3:
                 print("\nExiting Program...")
                 exit(0)
             else:
