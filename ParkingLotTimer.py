@@ -11,6 +11,7 @@ def register():
         password=str(input("Enter your password: "))
         if len(password) < 8 :
             print("Password must be atleast 8 characters.")
+            register()
         else:
             user_info[username]={'password':password}
             print(f"Registration Complete.")
@@ -39,7 +40,11 @@ def user_menu(username):
                 try:
                     choice=int(choice)
                     if choice==1:
-                        print()
+                        print("Your To-Do List:")
+                        for key, value in To_Do.items():
+                            print(f"{key}: {value}")
+                        input("Press any key to exit...")
+                        user_menu(username)
                     elif choice==2:
                         add_task(username)
                     elif choice==3:
@@ -53,11 +58,34 @@ def user_menu(username):
                     print("\nInvalid Input. Please enter a number.")
 
 def add_task(username):
-    print(To_Do)
+    print("Your To-Do List:")
+    for key, value in To_Do.items():
+        print(f"{key}: {value}")
     print("\nAdd new task")
     task=input("Task: ")
+    if task in To_Do:
+        print("Task is already in your list.")
+        add_task(username)
+    else:
+        task_number = len(To_Do) + 1
+        To_Do[task_number]=task
+        print("New Task Added") 
+        user_menu(username)
+
 def remove_task(username):
-    pass
+    print("Your To-Do List:")
+    for key, value in To_Do.items():
+        print(f"{key}: {value}")
+    print("\nRemoving a Task")
+    task_number = int(input("Enter the number of the task to remove: "))
+    
+    if task_number in To_Do:
+        removed_task = To_Do.pop(task_number)
+        print(f"Task removed successfully!")
+        user_menu(username)2
+    else:
+        print("Invalid task number. No task removed.")
+        remove_task(username)
 
 def menu():
     while True:
