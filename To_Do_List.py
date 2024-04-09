@@ -1,3 +1,5 @@
+import os
+
 def register():
     print("\nRegister a new account")
     username=input("Enter New username: ")
