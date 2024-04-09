@@ -1,7 +1,3 @@
-To_Do = {}
-
-user_info={}
-
 def register():
     print("\nRegister a new account")
     username=input("Enter New username: ")
@@ -9,25 +5,27 @@ def register():
         print("This username already exists")
     else:
         password=str(input("Enter your password: "))
-        if len(password) < 8 :
-            print("Password must be atleast 8 characters.")
+        if len(password) < 4 :
+            print("Password must be atleast 4 characters.")
             register()
         else:
-            user_info[username]={'password':password}
+            user_info[username] = password
             print(f"Registration Complete.")
 
 def sign_in():
     print("Sign in an account")
-    username=str(input("Enter Username: "))
-    password=str(input("Enter Password: "))
-    if username in user_info and user_info[username]['password']== password:
+    username=input("Enter Username: ")
+    password=input("Enter Password: ")
+    if username in user_info and user_info[username] == password:
         print("Sign in successful")
-        user_menu(username)
+        return user_menu(username)
     else:
         print("Invalid Username/Password")
-        return
+        return None
     
 def user_menu(username):
+            if username not in to_do:
+                to_do[username] = []
             while True:
                 print("\nWelcome to you To-Do List")
                 print("1. View Tasks")
@@ -41,8 +39,8 @@ def user_menu(username):
                     choice=int(choice)
                     if choice==1:
                         print("Your To-Do List:")
-                        for key, value in To_Do.items():
-                            print(f"{key}: {value}")
+                        for i, task in enumerate(to_do[username], start=1):
+                            print(f"{i}. {task}")
                         input("Press any key to exit...")
                         user_menu(username)
                     elif choice==2:
@@ -58,34 +56,36 @@ def user_menu(username):
                     print("\nInvalid Input. Please enter a number.")
 
 def add_task(username):
-    print("Your To-Do List:")
-    for key, value in To_Do.items():
-        print(f"{key}: {value}")
+    print(f"\nYour To-Do List:")
+    for i, task in enumerate(to_do[username], start=1):
+        print(f"{i}. {task}")
     print("\nAdd new task")
-    task=input("Task: ")
-    if task in To_Do:
+    task=input("Enter Task: ")
+    if task in to_do[username]:
         print("Task is already in your list.")
         add_task(username)
     else:
-        task_number = len(To_Do) + 1
-        To_Do[task_number]=task
+        to_do[username].append(task)
         print("New Task Added") 
         user_menu(username)
 
 def remove_task(username):
     print("Your To-Do List:")
-    for key, value in To_Do.items():
-        print(f"{key}: {value}")
+    for i, task in enumerate(to_do[username], start=1):
+        print(f"{i}. {task}")
     print("\nRemoving a Task")
     task_number = int(input("Enter the number of the task to remove: "))
     
-    if task_number in To_Do:
-        removed_task = To_Do.pop(task_number)
+    if 1 <= task_number <= len(to_do[username]):
+        removed_task = to_do[username].pop(task_number - 1)
         print(f"Task removed successfully!")
         user_menu(username)
     else:
         print("Invalid task number. No task removed.")
         remove_task(username)
+
+user_info={}
+to_do = {}
 
 def menu():
     while True:
